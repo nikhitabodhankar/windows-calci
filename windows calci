@@ -1,0 +1,91 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace winCalculator
+{
+    public partial class Form1 : Form
+    {
+        Double resultValue=0;
+        string opPerformed = "";
+        bool isopPerformed = false;
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void on_click(object sender, EventArgs e)
+        {
+            if ((textBox.Text == "0") || (isopPerformed))
+                textBox.Clear();
+            Button on = (Button)sender;
+            if(on.Text==".")
+            {
+                if (!textBox.Text.Contains("."))
+                    textBox.Text = textBox.Text + on.Text;
+            }
+            textBox.Text = textBox.Text + on.Text;
+            isopPerformed = false;
+        }
+
+        private void op_click(object sender, EventArgs e)
+        {
+            Button on = (Button)sender;
+            if (resultValue != 0)
+            {
+                equalto.PerformClick();
+                opPerformed = on.Text;
+                lcurrentOp.Text = resultValue + " " + opPerformed;
+                isopPerformed = true;
+            }
+            else
+            {
+
+
+                opPerformed = on.Text;
+                resultValue = Double.Parse(textBox.Text);
+                lcurrentOp.Text = resultValue + " " + opPerformed;
+                isopPerformed = true;
+            }
+
+        }
+
+        private void clear_Click(object sender, EventArgs e)
+        {
+            textBox.Text = "0";
+            resultValue = 0;
+        }
+
+        private void equalto_Click(object sender, EventArgs e)
+        {
+            switch(opPerformed)
+                {
+                case "+":
+                    textBox.Text = (resultValue + Double.Parse(textBox.Text)).ToString();
+                    break;
+                case "-":
+                    textBox.Text = (resultValue - Double.Parse(textBox.Text)).ToString();
+                    break;
+                case "*":
+                    textBox.Text = (resultValue * Double.Parse(textBox.Text)).ToString();
+                    break;
+                case "/":
+                    textBox.Text = (resultValue / Double.Parse(textBox.Text)).ToString();
+                    break;
+                case "%":a
+                    textBox.Text = (resultValue % Double.Parse(textBox.Text)).ToString();
+                    break;
+                default:
+                    break;
+            }
+            resultValue = Double.Parse(textBox.Text);
+            lcurrentOp.Text = "";
+        }
+    }
+}
